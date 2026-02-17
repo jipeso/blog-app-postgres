@@ -1,0 +1,34 @@
+services:
+  server:
+    image: blog-server-dev
+    build:
+      context: ./backend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend:/usr/src/app
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PASSWORD: secret
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    container_name: blog-server-dev
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 2s
+      retries: 5
+    container_name: blog-db-dev
+
+volumes:
+  postgres_data:
