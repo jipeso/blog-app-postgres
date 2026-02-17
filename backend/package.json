@@ -16,13 +16,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint ."
   },
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.8",
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "prettier": "^3.8.1"
   },
   "dependencies": {
     "cors": "^2.8.6",
@@ -30,7 +32,6 @@
     "express": "^5.2.1",
     "morgan": "^1.10.1",
     "pg": "^8.18.0",
-    "prettier": "^3.8.1",
     "sequelize": "^6.37.7"
   }
 }

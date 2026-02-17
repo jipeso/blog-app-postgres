@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize'
 import { sequelize } from '../utils/db.js'
 
-class Blog extends Model {}
+class Blog extends Model { }
 
 Blog.init(
   {
@@ -33,7 +33,5 @@ Blog.init(
     modelName: 'blog',
   }
 )
-
-Blog.sync()
 
 export default Blog
