@@ -1,5 +1,6 @@
 import Router from 'express'
-import Blog from '../models/blog.js'
+import { Blog, User } from '../models/index.js'
+import { tokenExtractor } from '../utils/middleware.js'
 
 const router = Router()
 
@@ -9,13 +10,24 @@ const blogFinder = async (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
-  const blogs = await Blog.findAll()
+  const blogs = await Blog.findAll({
+    attributes: { exclude: ['userId'] },
+    include: {
+      model: User,
+      attributes: ['name'],
+    },
+  })
   res.json(blogs)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', tokenExtractor, async (req, res) => {
   try {
-    const blog = await Blog.create(req.body)
+    const user = await User.findByPk(req.decodedToken.id)
+    const blog = await Blog.create({
+      ...req.body,
+      userId: user.id,
+      date: new Date(),
+    })
     res.json(blog)
   } catch (error) {
     res.status(400).json({ error })

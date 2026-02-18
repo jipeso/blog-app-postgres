@@ -1,0 +1,6 @@
+PUT http://localhost:3000/api/users/tester
+Content-Type: application/json
+
+{
+  "name": "Changed Name"
+}
