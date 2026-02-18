@@ -6,6 +6,16 @@ const router = Router()
 
 const blogFinder = async (req, res, next) => {
   req.blog = await Blog.findByPk(req.params.id)
+  if (!req.blog) {
+    return res.status(404).json({ error: 'blog not found' })
+  }
+  next()
+}
+
+const authorizeOwner = async (req, res, next) => {
+  if (req.decodedToken.id !== req.blog.userId) {
+    return res.status(403).json({ error: 'user not authorized' })
+  }
   next()
 }
 
@@ -21,34 +31,35 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', tokenExtractor, async (req, res) => {
-  try {
-    const user = await User.findByPk(req.decodedToken.id)
-    const blog = await Blog.create({
-      ...req.body,
-      userId: user.id,
-      date: new Date(),
-    })
-    res.json(blog)
-  } catch (error) {
-    res.status(400).json({ error })
-  }
+  const blog = await Blog.create({
+    ...req.body,
+    userId: req.decodedToken.id,
+    date: new Date(),
+  })
+  res.status(201).json(blog)
 })
 
-router.delete('/:id', blogFinder, async (req, res) => {
-  if (req.blog) {
+router.delete(
+  '/:id',
+  tokenExtractor,
+  blogFinder,
+  authorizeOwner,
+  async (req, res) => {
     await req.blog.destroy()
+    res.status(204).end()
   }
-  res.status(204).end()
-})
+)
 
-router.put('/:id', blogFinder, async (req, res) => {
-  if (req.blog) {
+router.put(
+  '/:id',
+  tokenExtractor,
+  blogFinder,
+  authorizeOwner,
+  async (req, res) => {
     req.blog.likes = req.body.likes
     await req.blog.save()
     res.json(req.blog)
-  } else {
-    res.status(404).end()
   }
-})
+)
 
 export default router
