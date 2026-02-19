@@ -16,11 +16,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
     "lint": "eslint ."
   },
   "devDependencies": {
-    "cross-env": "^10.1.0",
     "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.8",
     "nodemon": "^3.1.11",

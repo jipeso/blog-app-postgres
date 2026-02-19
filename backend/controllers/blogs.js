@@ -1,4 +1,5 @@
 import Router from 'express'
+import { Op } from 'sequelize'
 import { Blog, User } from '../models/index.js'
 import { tokenExtractor } from '../utils/middleware.js'
 
@@ -20,13 +21,23 @@ const authorizeOwner = async (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
+  const where = {}
+
+  if (req.query.search) {
+    where.title = {
+      [Op.iLike]: `%${req.query.search}%`,
+    }
+  }
+
   const blogs = await Blog.findAll({
     attributes: { exclude: ['userId'] },
     include: {
       model: User,
       attributes: ['name'],
     },
+    where,
   })
+
   res.json(blogs)
 })
 
