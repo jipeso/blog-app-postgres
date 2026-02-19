@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import blogsRouter from './controllers/blogs.js'
 import usersRouter from './controllers/users.js'
 import loginRouter from './controllers/login.js'
+import authorsRouter from './controllers/authors.js'
 import { errorHandler } from './utils/middleware.js'
 
 const app = express()
@@ -16,6 +17,7 @@ app.use(morgan('dev'))
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/authors', authorsRouter)
 
 app.use(errorHandler)
 

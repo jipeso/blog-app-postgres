@@ -36,6 +36,7 @@ router.get('/', async (req, res) => {
       model: User,
       attributes: ['name'],
     },
+    order: [['likes', 'DESC']],
     where,
   })
 
@@ -62,16 +63,10 @@ router.delete(
   }
 )
 
-router.put(
-  '/:id',
-  tokenExtractor,
-  blogFinder,
-  authorizeOwner,
-  async (req, res) => {
-    req.blog.likes = req.body.likes
-    await req.blog.save()
-    res.json(req.blog)
-  }
-)
+router.put('/:id', blogFinder, async (req, res) => {
+  req.blog.likes = req.body.likes
+  await req.blog.save()
+  res.json(req.blog)
+})
 
 export default router
