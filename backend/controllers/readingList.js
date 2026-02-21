@@ -1,6 +1,7 @@
 import Router from 'express'
 
 import { Blog, User, ReadingList } from '../models/index.js'
+import { tokenExtractor } from '../utils/middleware.js'
 const router = Router()
 
 router.post('/', async (req, res) => {
@@ -20,6 +21,21 @@ router.post('/', async (req, res) => {
   })
 
   res.status(201).json(readingListEntry)
+})
+
+router.put('/:id', tokenExtractor, async (req, res) => {
+  const readingListEntry = await ReadingList.findByPk(req.params.id)
+  if (!readingListEntry) {
+    return res.status(404).json({ error: 'entry not found' })
+  }
+
+  if (req.decodedToken.id !== readingListEntry.userId) {
+    return res.status(403).json({ error: 'user not authorized' })
+  }
+
+  readingListEntry.read = req.body.read
+  await readingListEntry.save()
+  res.json(readingListEntry)
 })
 
 export default router
