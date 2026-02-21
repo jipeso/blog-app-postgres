@@ -1,6 +1,6 @@
 import Router from 'express'
 
-import { User, Blog } from '../models/index.js'
+import { User, Blog, ReadingList } from '../models/index.js'
 
 const router = Router()
 
@@ -16,21 +16,31 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const user = await User.findByPk(req.params.id, {
-    attributes: ['name', 'username'],
+    attributes: { exclude: ['id', 'createdAt', 'updatedAt'] },
     include: [
       {
         model: Blog,
         as: 'readings',
         attributes: { exclude: ['userId', 'createdAt', 'updatedAt'] },
         through: {
-          attributes: [],
+          attributes: ['read', 'id'],
         },
       },
     ],
   })
 
   if (user) {
-    res.json(user)
+    res.json({
+      username: user.username,
+      name: user.name,
+      readings: user.readings.map((blog) => {
+        const { reading_list, ...blogData } = blog.toJSON()
+        return {
+          ...blogData,
+          readingLists: [reading_list],
+        }
+      }),
+    })
   } else {
     res.status(404).end()
   }
