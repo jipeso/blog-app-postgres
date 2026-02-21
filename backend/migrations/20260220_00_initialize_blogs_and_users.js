@@ -37,7 +37,7 @@ export const up = async ({ context: queryInterface }) => {
       type: DataTypes.STRING,
     },
     url: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     likes: {
