@@ -13,13 +13,6 @@ const blogFinder = async (req, res, next) => {
   next()
 }
 
-const authorizeOwner = async (req, res, next) => {
-  if (req.decodedToken.id !== req.blog.userId) {
-    return res.status(403).json({ error: 'user not authorized' })
-  }
-  next()
-}
-
 router.get('/', async (req, res) => {
   const where = {}
 
@@ -56,8 +49,11 @@ router.delete(
   '/:id',
   tokenExtractor,
   blogFinder,
-  authorizeOwner,
   async (req, res) => {
+    if (req.decodedToken.id !== req.blog.userId) {
+      return res.status(403).json({ error: 'user not authorized' })
+    }
+
     await req.blog.destroy()
     res.status(204).end()
   }
