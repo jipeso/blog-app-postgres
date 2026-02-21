@@ -1,10 +1,11 @@
 POST http://localhost:3000/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImV4YW1wbGVAZ21haWwuY29tIiwiaWQiOjEsImlhdCI6MTc3MTY2OTcyNX0.sfRBIG__hmwaL-5vMLwxRr38y1hkN5NWk43QrV3wCvE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImV4YW1wbGUyQGdtYWlsLmNvbSIsImlkIjoyLCJpYXQiOjE3NzE2NzMyMTB9.qlVtnx3KjgxDu4-gph9DazCtngFzgNE6WVSeC7ne2a4
                       
 {
-  "title": "Ok this is a blog",
-  "author": "Test Author",
+  "title": "Testing Blogging",
+  "author": "Best Author",
   "url": "https://example.com",
-  "year": 2027
+  "year": 2026,
+  "likes": 30
 }
