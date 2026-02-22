@@ -15,7 +15,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "node --test --test-concurrency=1 tests/api_ch3.test.js",
+    "test": "node --test --test-concurrency=1",
     "dev": "NODE_ENV=development nodemon index.js",
     "migration:down": "node utils/rollback.js",
     "lint": "eslint ."

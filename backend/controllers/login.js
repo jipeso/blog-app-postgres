@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import Router from 'express'
 
 import { SECRET } from '../utils/config.js'
-import { User } from '../models/index.js'
+import { User, Session } from '../models/index.js'
 
 const router = Router()
 
@@ -23,12 +23,19 @@ router.post('/', async (request, response) => {
     })
   }
 
+  if (user.disabled) {
+    return response.status(401).json({
+      error: 'account is disabled',
+    })
+  }
   const userForToken = {
     username: user.username,
     id: user.id,
   }
 
   const token = jwt.sign(userForToken, SECRET)
+
+  await Session.create({ userId: user.id, token })
 
   response
     .status(200)

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 
+import { Session } from '../models/index.js'
 import { SECRET } from '../utils/config.js'
 import logger from './logger.js'
 
@@ -19,18 +20,23 @@ export const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
-export const tokenExtractor = (req, res, next) => {
+export const tokenExtractor = async (req, res, next) => {
   const authorization = req.get('authorization')
   if (
     authorization &&
     authorization.toLowerCase().startsWith('bearer ')
   ) {
     try {
-      console.log(authorization.substring(7))
-      req.decodedToken = jwt.verify(
-        authorization.substring(7),
-        SECRET
-      )
+      const token = authorization.substring(7)
+      req.decodedToken = jwt.verify(token, SECRET)
+
+      const session = await Session.findOne({
+        where: { token },
+      })
+
+      if (!session) {
+        return res.status(401).json({ error: 'session expired' })
+      }
     } catch (error) {
       console.log(error)
       return res.status(401).json({ error: 'token invalid' })

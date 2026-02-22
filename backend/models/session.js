@@ -2,37 +2,31 @@ import { Model, DataTypes } from 'sequelize'
 
 import { sequelize } from '../utils/db.js'
 
-class User extends Model {}
+class Session extends Model {}
 
-User.init(
+Session.init(
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    username: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-      validate: {
-        isEmail: true,
-      },
-    },
-    name: {
+    token: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    disabled: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: 'users', key: 'id' },
     },
   },
   {
     sequelize,
     underscored: true,
-    modelName: 'user',
+    timestamps: false,
+    modelName: 'session',
   }
 )
 
-export default User
+export default Session

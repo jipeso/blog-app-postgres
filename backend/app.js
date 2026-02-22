@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import blogsRouter from './controllers/blogs.js'
 import usersRouter from './controllers/users.js'
 import loginRouter from './controllers/login.js'
+import logoutRouter from './controllers/logout.js'
 import authorsRouter from './controllers/authors.js'
 import testingRouter from './controllers/testing.js'
 import readingListsRouter from './controllers/readingList.js'
@@ -19,6 +20,7 @@ app.use(morgan('dev'))
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/logout', logoutRouter)
 app.use('/api/authors', authorsRouter)
 app.use('/api/readinglists', readingListsRouter)
 app.use('/api/reset', testingRouter)
