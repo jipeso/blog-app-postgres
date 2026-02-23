@@ -1,2 +1,2 @@
-DELETE http://localhost:3000/api/blogs/4
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImV4YW1wbGUzQGdtYWlsLmNvbSIsImlkIjo0LCJpYXQiOjE3NzE2OTc3MzJ9.ovzJ2CIi3UvTrbJucDjW1GHCMcDJenEb-C6MMHWZ2PU
+DELETE http://localhost:3001/api/blogs/1d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImV4YW1wbGUzQGdtYWlsLmNvbSIsImlkIjoxLCJpYXQiOjE3NzE4NDU0MDN9.RZeGTocuFtPqwyQ8i9bhKlavWyPlaXhPlGPMLTDbKxc

@@ -1,11 +1,10 @@
 import Router from 'express'
 
-import { Blog, User } from '../models/index.js'
+import { sequelize } from '../utils/db.js'
 const router = Router()
 
-router.get('/reset', async (req, res) => {
-  await Blog.destroy({ where: {} })
-  await User.destroy({ where: {} })
+router.post('/', async (req, res) => {
+  await sequelize.truncate({ cascade: true })
   res.status(204).end()
 })
 

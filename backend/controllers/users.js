@@ -6,9 +6,10 @@ const router = Router()
 
 router.get('/', async (req, res) => {
   const users = await User.findAll({
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
     include: {
       model: Blog,
-      attributes: { exclude: ['userId'] },
+      attributes: { exclude: ['userId', 'createdAt', 'updatedAt'] },
     },
   })
   res.json(users)

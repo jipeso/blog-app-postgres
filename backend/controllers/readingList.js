@@ -5,6 +5,13 @@ import { tokenExtractor } from '../utils/middleware.js'
 const router = Router()
 
 router.post('/', async (req, res) => {
+  if (!req.body.blogId) {
+    return res.status(400).json({ error: 'blogId is required' })
+  }
+  if (!req.body.userId) {
+    return res.status(400).json({ error: 'userId is required' })
+  }
+
   req.blog = await Blog.findByPk(req.body.blogId)
   if (!req.blog) {
     return res.status(404).json({ error: 'blog not found' })

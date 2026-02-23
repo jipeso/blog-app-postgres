@@ -26,7 +26,7 @@ app.use('/api/readinglists', readingListsRouter)
 app.use('/api/reset', testingRouter)
 
 app.get('/', (req, res) => {
-  res.status(200).end()
+  res.status(200).json({ message: 'blog server' })
 })
 
 app.use(errorHandler)

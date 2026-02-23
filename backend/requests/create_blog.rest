@@ -1,11 +1,11 @@
-POST http://localhost:3000/api/blogs
+POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImV4YW1wbGUzQGdtYWlsLmNvbSIsImlkIjo0LCJpYXQiOjE3NzE2OTc3MzJ9.ovzJ2CIi3UvTrbJucDjW1GHCMcDJenEb-C6MMHWZ2PU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImV4YW1wbGUxQGdtYWlsLmNvbSIsImlkIjoyLCJpYXQiOjE3NzE4NDc4MDB9.9uKHY9BPGdu_hYVM3dLd5JM8sRy9t2tIX3-mF5yBZGI
                       
 {
-  "title": "Blogging again disabled",
-  "author": "Best Author",
+  "title": "Blogging",
+  "author": "Test Author",
   "url": "https://example.com",
   "year": 2026,
-  "likes": 30
+  "likes": 10
 }
