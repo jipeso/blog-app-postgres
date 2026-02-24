@@ -322,9 +322,9 @@ describe('Session Management API', () => {
   })
 
   it('multiple logins create separate sessions', async () => {
-    const token1 = await login('session@example.com', 'sessionpass')
+    const token1 = await login('session@example.com', 'salainen')
     await sleep(1100)
-    const token2 = await login('session@example.com', 'sessionpass')
+    const token2 = await login('session@example.com', 'salainen')
 
     assert.notStrictEqual(token1, token2)
 
@@ -354,7 +354,7 @@ describe('Session Management API', () => {
   it('logout removes all sessions for that user', async () => {
     // Previous test created two sessions; logout should remove both
     await sleep(1100)
-    const token = await login('session@example.com', 'sessionpass')
+    const token = await login('session@example.com', 'salainen')
 
     await axios.delete(`${baseUrl}/logout`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -378,7 +378,7 @@ describe('Session Management API', () => {
 
   it('active user can make authenticated requests', async () => {
     await sleep(1100)
-    const token = await login('session@example.com', 'sessionpass')
+    const token = await login('session@example.com', 'salainen')
 
     const newBlog = {
       title: 'Blog for Active User',
@@ -428,7 +428,7 @@ describe('Integration: Reading Lists and Sessions', () => {
     )
 
     assert.ok([200, 201].includes(response.status))
-    assert.strictEqual(response.data.blog_id, integrationBlogId)
+    assert.strictEqual(response.data.blogId, integrationBlogId)
     integrationReadingListId = response.data.id
   })
 

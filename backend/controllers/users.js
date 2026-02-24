@@ -38,17 +38,7 @@ router.get('/:id', async (req, res) => {
   })
 
   if (user) {
-    res.json({
-      username: user.username,
-      name: user.name,
-      readings: user.readings.map((blog) => {
-        const { reading_list, ...blogData } = blog.toJSON()
-        return {
-          ...blogData,
-          readingLists: [reading_list],
-        }
-      }),
-    })
+    res.json(user)
   } else {
     res.status(404).end()
   }

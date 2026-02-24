@@ -1,22 +1,21 @@
 services:
   server:
-    image: blog-server-dev
+    image: blog-server
     build:
       context: ./backend
-      dockerfile: dev.Dockerfile
+      dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 3001:3001
     volumes:
       - ./backend:/usr/src/app
     environment:
-      POSTGRES_HOST: db
-      POSTGRES_PASSWORD: secret
+      DATABASE_URL: postgres://postgres:secret@db:5432/postgres
       SECRET: thisisaverylongandsecuresecret
     depends_on:
       db:
         condition: service_healthy
         restart: true
-    container_name: blog-server-dev
+    container_name: blog-server
 
   db:
     image: postgres
@@ -29,7 +28,7 @@ services:
       interval: 2s
       timeout: 2s
       retries: 5
-    container_name: blog-db-dev
+    container_name: blog-db
 
 volumes:
   postgres_data:

@@ -22,6 +22,16 @@ router.post('/', async (req, res) => {
     return res.status(404).json({ error: 'user not found' })
   }
 
+  const existingEntry = await ReadingList.findOne({
+    where: {
+      userId: req.user.id,
+      blogId: req.blog.id,
+    },
+  })
+  if (existingEntry) {
+    return res.status(400).json({ error: 'entry already exists' })
+  }
+
   const readingListEntry = await ReadingList.create({
     userId: req.user.id,
     blogId: req.blog.id,
@@ -37,7 +47,7 @@ router.put('/:id', tokenExtractor, async (req, res) => {
   }
 
   if (req.decodedToken.id !== readingListEntry.userId) {
-    return res.status(403).json({ error: 'user not authorized' })
+    return res.status(401).json({ error: 'user not authorized' })
   }
 
   readingListEntry.read = req.body.read
